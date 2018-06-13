@@ -88,13 +88,16 @@ module.exports = function (server, config) {
                 join(name);
                 safeCb(cb)(null, name);
             }
+            var roomInfo = {'name': name, 'rooms': io.nsps['/'].adapter.rooms[name]};
+            // io.sockets.emit('roomcreated', roomInfo);
+            client.broadcast.emit('roomcreated', roomInfo);
         });
 
         // support for logging full webrtc traces to stdout
         // useful for large-scale error monitoring
         client.on('trace', function (data) {
             console.log('trace', JSON.stringify(
-            [data.type, data.session, data.prefix, data.peer, data.time, data.value]
+                [data.type, data.session, data.prefix, data.peer, data.time, data.value]
             ));
         });
 
@@ -137,7 +140,8 @@ module.exports = function (server, config) {
     }
 
     function clientsInRoom(name) {
-        return io.sockets.clients(name).length;
+        var adapter = io.nsps['/'].adapter;
+        return Object.keys(adapter.rooms[name] || {}).length;
     }
 
 };

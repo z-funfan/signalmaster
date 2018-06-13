@@ -1,11 +1,11 @@
 {
   "isDev": true,
   "server": {
-    "port": 8888,
+    "port": 9999,
     "/* secure */": "/* whether this connects via https */",
-    "secure": false,
-    "key": null,
-    "cert": null,
+    "secure": true,
+    "key": "/etc/letsencrypt/live/funfan.xyz/privkey.pem",
+    "cert": "/etc/letsencrypt/live/funfan.xyz/fullchain.pem",
     "password": null
   },
   "rooms": {

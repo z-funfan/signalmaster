@@ -1,6 +1,5 @@
 /*global console*/
-var yetify = require('yetify'),
-    config = require('getconfig'),
+var config = require('getconfig'),
     fs = require('fs'),
     sockets = require('./sockets'),
     port = parseInt(process.env.PORT || config.server.port, 10),
@@ -26,7 +25,7 @@ if (config.server.secure) {
 } else {
     server = require('http').Server(server_handler);
 }
-server.listen(port);
+server.listen(port, '0.0.0.0');
 
 sockets(server, config);
 
@@ -34,8 +33,8 @@ if (config.uid) process.setuid(config.uid);
 
 var httpUrl;
 if (config.server.secure) {
-    httpUrl = "https://localhost:" + port;
+    httpUrl = "https://funfan.xyz:" + port;
 } else {
-    httpUrl = "http://localhost:" + port;
+    httpUrl = "http://funfan.xyz:" + port;
 }
-console.log(yetify.logo() + ' -- signal master is running at: ' + httpUrl);
+console.log('funfan.xyz -- signal master is running at: ' + httpUrl);
