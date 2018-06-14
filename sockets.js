@@ -43,6 +43,8 @@ module.exports = function (server, config) {
                 if (!type) {
                     client.leave(client.room);
                     client.room = undefined;
+                    var roomInfo = {'name': name, 'rooms': io.nsps['/'].adapter.rooms[name]};
+                    client.broadcast.emit('roomchanged', roomInfo);
                 }
             }
         }
@@ -89,8 +91,8 @@ module.exports = function (server, config) {
                 safeCb(cb)(null, name);
             }
             var roomInfo = {'name': name, 'rooms': io.nsps['/'].adapter.rooms[name]};
-            // io.sockets.emit('roomcreated', roomInfo);
-            client.broadcast.emit('roomcreated', roomInfo);
+            // io.sockets.emit('roomchanged', roomInfo);
+            client.broadcast.emit('roomchanged', roomInfo);
         });
 
         // support for logging full webrtc traces to stdout
